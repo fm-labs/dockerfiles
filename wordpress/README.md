@@ -26,16 +26,16 @@ The images are drop-in replacements: same entrypoint, same environment variables
 | What | Where | Details |
 |---|---|---|
 | **APCu extension** | [`Dockerfile-apache`](Dockerfile-apache) | In-memory object cache (128 MB, 1 h TTL, off for CLI). Clears the Site Health "persistent object cache" notice **only together with** an APCu `object-cache.php` drop-in plugin. |
-| **PHP security** | [`files/php.ini`](files/php.ini) | Hides the PHP version, no error output to visitors (errors go to stderr), secure session cookies. |
+| **PHP security** | [`files/php.ini`](files/php.ini) | Hides the PHP version, no error output to visitors (errors go to stderr), HTTP-only session cookies. |
 | **PHP limits** | [`files/php.ini`](files/php.ini) | 256 MB memory, 64 MB uploads, 60 s execution time, 3000 input vars. |
 | **OPcache tuning** | [`files/php.ini`](files/php.ini) | 256 MB / 20 000 files / 60 s revalidation (official: 128 MB / 4 000 files / 2 s), plus a larger realpath cache. |
-| **Apache hardening** | [`files/apache.conf`](files/apache.conf) | Hides the server version, disables TRACE and directory listings, blocks PHP in `wp-content/uploads`, denies `wp-config.php`, `xmlrpc.php`, `readme.html`, `license.txt`, `debug.log`, `.ht*`. |
+| **Apache hardening** | [`files/apache.conf`](files/apache.conf) | Hides the server version, disables TRACE and directory listings, blocks PHP in `wp-content/uploads`, denies `wp-config.php`, `readme.html`, `license.txt`, `debug.log`, `.ht*`. |
 | **Browser caching** | [`files/apache.conf`](files/apache.conf) | `Expires` headers: images and fonts 1 year, CSS and JS 1 month. Enables `mod_headers`. |
 | **Worker limits** | [`files/apache.conf`](files/apache.conf) | Prefork capped at 16 workers (sized for about 1 GB RAM at ~60 MB per worker). |
 
 The PHP settings load as `conf.d/zz-custom.ini` and the Apache settings as the `zz-custom` conf, so they override the defaults.
 
-> **Note:** `xmlrpc.php` is blocked, which breaks Jetpack and the WordPress mobile apps. Remove it from the `FilesMatch` line in `apache.conf` if you need them.
+> **Compatibility:** nothing that WordPress, Jetpack or the mobile apps rely on is blocked. `xmlrpc.php` stays reachable; protect it with a security plugin if you don't need it.
 
 ## About the official image
 
