@@ -1,0 +1,6 @@
+ARG PHP_VERSION=8.3
+
+FROM wordpress:php${PHP_VERSION}-apache
+COPY files/php.ini /usr/local/etc/php/conf.d/zz-custom.ini
+COPY files/apache.conf /etc/apache2/conf-available/zz-custom.conf
+RUN a2enconf zz-custom && a2enmod headers expires
