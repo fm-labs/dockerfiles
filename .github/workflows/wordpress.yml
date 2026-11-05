@@ -55,6 +55,9 @@ jobs:
         run: |
           set -xe
 
+          # wordpress-261105 -> 261105
+          RELEASE_TAG="${RELEASE_TAG#wordpress-}"
+
           docker buildx build \
             -t $REGISTRY/$REPO_NAME:$IMAGE_TAG \
             -t $REGISTRY/$REPO_NAME:$IMAGE_TAG-$RELEASE_TAG \
