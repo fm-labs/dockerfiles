@@ -48,7 +48,7 @@ jobs:
         id: build-image
         env:
           PHP_VERSION: ${{ matrix.php_version }}
-          IMAGE_TAG: ${{ matrix.php_version }}-apache
+          IMAGE_TAG: php${{ matrix.php_version }}-apache
           RELEASE_TAG: ${{ github.ref_name }}
           REPO_NAME: ${{ vars.DOCKERHUB_REPONAME }}
           REGISTRY: ${{ secrets.DOCKERHUB_USERNAME }}
